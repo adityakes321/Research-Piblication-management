@@ -30,12 +30,24 @@
   <body>
     <form method="post" action="/journal" class="abc">
       <div class="form-group col-12">
+        <label for="exampleTextarea">DOI of the paper</label>
+        <textarea
+          name="dop"
+          id="doi-input"
+          class="form-control"
+          rows="1"
+        ></textarea>
+        <button type="button" class="btn btn-primary mt-3" id="search-doi">
+          Search DOI
+        </button>
+      </div>
+      <div class="form-group col-12">
         <label for="exampleTextarea">Full IEEE Reference</label>
         <textarea name="fir" class="form-control" rows="1"></textarea>
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea">Unique ID</label>
-        <textarea name="ui" class="form-control" rows="1"></textarea>
+        <textarea id="uid" name="ui" class="form-control" rows="1"></textarea>
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea">Title of Paper</label>
@@ -43,29 +55,29 @@
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea">Name of Faculty authors</label>
-        <textarea name="nofa" class="form-control" rows="1"></textarea>
+        <textarea id="name" name="nofa" class="form-control" rows="1"></textarea>
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea">Name of Journal</label>
-        <textarea name="noj" class="form-control" rows="1"></textarea>
+        <textarea id="noj" name="noj" class="form-control" rows="1"></textarea>
       </div>
       <div class="form-group col-12">
         <label for="exampleSelect1">Publication Year</label>
-        <select name="py" class="form-control">
+        <select id="py" name="py" class="form-control">
           <option>2021</option>
           <option>2022</option>
         </select>
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea">ISSN Number</label>
-        <textarea name="in" class="form-control" rows="1"></textarea>
+        <textarea id="issn" name="in" class="form-control" rows="1"></textarea>
       </div>
       <div class="form-group col-12">
         <label for="exampleTextarea"
           >Link of the recognition in UGC enlistment of the Journal (website
           link)</label
         >
-        <textarea name="lor" class="form-control" rows="1"></textarea>
+        <textarea name="lor" id="link" class="form-control" rows="1"></textarea>
       </div>
       <fieldset class="form-group col-12">
         <label for="exampleTextarea"
@@ -100,7 +112,7 @@
       </fieldset>
       <div class="form-group col-12">
         <label for="exampleSelect1">Month of Publication</label>
-        <select name="mop" class="form-control">
+        <select id="month" name="mop" class="form-control">
           <option>January</option>
           <option>February</option>
           <option>March</option>
@@ -161,32 +173,14 @@
         </select>
       </div>
       <div class="form-group col-12">
-        <label for="exampleTextarea">DOI of the paper</label>
-        <textarea
-          name="dop"
-          id="doi-input"
-          class="form-control"
-          rows="1"
-        ></textarea>
-        <button type="button" class="btn btn-primary mt-3" id="search-doi">
-          Search DOI
-        </button>
+
       </div>
       <div class="form-group col-12">
-        <label for="exampleInputFile">Upload the paper</label>
-        <input
-          name="utp"
-          type="file"
-          class="form-control-file"
-          aria-describedby="fileHelp"
-        />
-        <small id="fileHelp" class="form-text text-muted"
-          >File should not exceed 200 MB</small
-        >
-      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
     </form>
 
     <script  src="./scripts/input_journal.js"></script>
+    
   </body>
 </html>

@@ -5,38 +5,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const Cite = require("citation-js");
 
+const fileUpload = require('express-fileupload')
+const mongodb = require('mongodb')
+const fs = require('fs')
+const router = express.Router()
+const mongoClient = mongodb.MongoClient
+const binary = mongodb.Binary
+
 app.use(cors());
-
-
-// var db = require('mongodb').Db, MongoClient = require('mongodb').MongoClient;
-// var assert = require('assert');
-// var ObjectId = require('mongodb').ObjectID;
-
-// var bindata = new require('mongodb').Binary("ZzEudm1s");
-// var insertDocument = function(db, callback) {
-//     var chunk = {
-//         "_id" : new ObjectId("535e1b88e421ad3a443742e7"),
-//         "files_id" : new ObjectId("5113b0062be53b231f9dbc11"),
-//         "n" : 0,
-//         "data" : bindata
-//     };
-
-//     db.collection('journals').insertOne(chunk, function(err, result) {
-//         assert.equal(err, null);
-//         console.log("Inserted a document into the collection.");
-//         callback();
-//     });
-// };
-// MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
-//     assert.equal(null, err);
-//     insertDocument(db, function() {
-//         db.close();
-//     });
-// });
-
-// const path = require('path');
-// const fs = require("fs");
-// const multer = require("multer");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -46,18 +22,15 @@ mongoose.connect(
   () => console.log(" Mongoose is connected")
 );
 
-// app.set('view engine', 'ejs');
-
-//create a data schema
 
 const journalsSchema = {
   IEEE_reference: String,
-  unique_id: Number,
+  unique_id: String,
   title_of_paper: String,
   name_of_authors: String,
   name_of_journal: String,
   publication_year: Number,
-  ISSN_number: Number,
+  ISSN_number: String,
   link_of_recognition: String,
   journal_type: String,
   month_of_publication: String,
@@ -94,12 +67,7 @@ const conferenceSchema = {
   DOI_of_paper: String,
 };
 
-// //file
-// module.exports = {
-//     url: "mongodb://localhost:27017/",
-//     database: "bezkoder_files_db",
-//     imgBucket: "photos",
-//   };
+
 
 const journals = mongoose.model("journals", journalsSchema);
 const conferences = mongoose.model("conferences", conferenceSchema);
@@ -122,6 +90,10 @@ app.get("/", function (req, res) {
 
 app.get("/homepage", (req, res) => {
   res.sendFile(__dirname + "/views/homepage.html");
+});
+
+app.get("/inputFile", (req, res) => {
+  res.sendFile(__dirname + "/input_components/file_input.html");
 });
 
 app.get("/citation-data/", cors(), (req, res) => {
@@ -193,7 +165,7 @@ app.post("/journal", function (req, res) {
     file: req.body.utp,
   });
   newJournal.save();
-  res.redirect("/homepage");
+  res.redirect("/inputFile");
 });
 
 app.post("/conference", function (req, res) {
@@ -220,6 +192,37 @@ app.post("/conference", function (req, res) {
   newConference.save();
   res.redirect("/homepage");
 });
+
+
+app.use(fileUpload())
+
+app.post("/upload", (req, res) => {
+    let file = { name: req.body.name, file: binary(req.files.uploadedFile.data) }
+    insertFile(file, res)
+})
+
+function insertFile(file, res) {
+    mongoClient.connect("mongodb+srv://adityakes321:aditya@cluster0.mv35f.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true }, (err, client) => {
+        if (err) {
+            return err
+        }
+        else {
+            let db = client.db('test')
+            let collection = db.collection('files')
+            try {
+                collection.insertOne(file)
+                console.log('File Inserted')
+            }
+            catch (err) {
+                console.log('Error while inserting:', err)
+            }
+            
+            res.redirect('/homepage')
+        }
+
+    })
+}
+
 
 app.listen(3000, function () {
   console.log("server is running on port 3000");
