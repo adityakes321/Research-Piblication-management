@@ -5,14 +5,18 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const Cite = require("citation-js");
 
+const cookieParser = require("cookie-parser")
+
 const fileUpload = require('express-fileupload')
 const mongodb = require('mongodb')
 const fs = require('fs')
 const router = express.Router()
 const mongoClient = mongodb.MongoClient
 const binary = mongodb.Binary
-
+app.set('view engine', 'ejs');
 app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -22,7 +26,25 @@ mongoose.connect(
   () => console.log(" Mongoose is connected")
 );
 
-
+const bookSchema = {
+  IEEE_reference: String,//
+  unique_id: String,//
+  title_of_paper: String,//
+  name_of_authors: String,//
+  //name_of_journal: String,//
+  publication_year: Number,//
+  ISSN_number: String,//
+  //link_of_recognition: String,//
+  journal_type: String,//
+  month_of_publication: String,//
+  name_of_publisher: String,//
+  affiliating_institute: String,//
+  google_scholar_citation_count: Number,//
+  indexed_in_scopus: String,
+  journal_h_index: String,//
+  co_author: String,//
+  DOI_of_paper: String,//
+};
 const journalsSchema = {
   IEEE_reference: String,
   unique_id: String,
@@ -38,9 +60,9 @@ const journalsSchema = {
   impact_factor: String,
   journal_h_index: String,
   indexing: {
-    scopus: { type: Boolean, default: false },
-    sci: { type: Boolean, default: false },
-    other: { type: Boolean, default: false },
+    scopus: { type: String, default: false },
+    sci: { type: String, default: false },
+    other: { type: String, default: false },
   },
   co_author: String,
   DOI_of_paper: String,
@@ -48,29 +70,57 @@ const journalsSchema = {
 
 const conferenceSchema = {
   IEEE_reference: String,
-  unique_id: Number,
+  unique_id: String,
   title_of_paper: String,
   name_of_authors: String,
   title_of_proceedings: String,
   name_of_conference: String,
   conference_type: String,
   publication_year: Number,
-  ISSN_ISBN_number: Number,
+  ISSN_ISBN_number: String,
   affiliate_institute: String,
   name_of_publisher: String,
   month_of_publication: String,
   indexed_in_scopus: String,
-  scopus_citation_count: Number,
-  google_scholar_citation_count: Number,
+  scopus_citation_count: String,
+  google_scholar_citation_count: String,
   conference_h_index: String,
   co_author: String,
   DOI_of_paper: String,
+};
+
+const referenceSchema = {
+  DOI_of_paper: String,
+  IEEE_reference: String,
+  unique_id: String,
+  title_of_paper: String,
+  name_of_authors: String,
+  name_of_publisher: String,
+  ISSN_ISBN_number: String,
+  publication_year: Number,
+  co_author: String,
+  google_scholar_citation_count: Number,
+};
+
+const patentSchema ={
+ patent_status: String,
+ is_principal_inventor: String,
+ inventor_name: String,
+ other_inventors: String,
+ patent_title: String,
+ application_patent_number: Number,
+ application_award_date: String,
+ patent_awarded_country: String,
+ unique_id: String,
 };
 
 
 
 const journals = mongoose.model("journals", journalsSchema);
 const conferences = mongoose.model("conferences", conferenceSchema);
+const books = mongoose.model("books", bookSchema);
+const references = mongoose.model("references", referenceSchema);
+const patents = mongoose.model("patents", patentSchema);
 
 const registrationSchema = {
   username: {
@@ -88,9 +138,12 @@ app.get("/", function (req, res) {
   res.render("index");
 });
 
-app.get("/homepage", (req, res) => {
-  res.sendFile(__dirname + "/views/homepage.html");
-});
+app.get('/homepage',function (req,res) {
+  res.render('homepage');
+})
+// app.get("/homepage", (req, res) => {
+//   res.sendFile(__dirname + "/views/homepage.html");
+// });
 
 app.get("/inputFile", (req, res) => {
   res.sendFile(__dirname + "/input_components/file_input.html");
@@ -168,6 +221,47 @@ app.post("/journal", function (req, res) {
   res.redirect("/inputFile");
 });
 
+app.post("/bookChapter", function (req, res) {
+  let newBook = new books({
+    IEEE_reference: req.body.fir,//
+    unique_id: req.body.ui,//
+    title_of_paper: req.body.top,//
+    name_of_authors: req.body.nofa,//
+    //name_of_journal: String,//
+    publication_year: req.body.py,//
+    ISSN_number: req.body.in,//
+    //link_of_recognition: String,//
+    journal_type: req.body.jt,//
+    month_of_publication: req.body.mop,//
+    name_of_publisher: req.body.nop,//
+    affiliating_institute: req.body.aitp,//
+    google_scholar_citation_count: req.body.gscc,//
+    indexed_in_scopus: req.body.is,
+    journal_h_index: req.body.jhi,//
+    co_author: req.body.ca,//
+    DOI_of_paper: req.body.dop,//
+  });
+  newBook.save();
+  res.redirect("/inputFile");
+});
+
+app.post("/reference", function (req, res) {
+  let newReference = new references({
+    DOI_of_paper: req.body.dop,
+    IEEE_reference: req.body.fir,
+    unique_id: req.body.ui,
+    title_of_paper: req.body.top,
+    name_of_authors: req.body.nofa,
+    name_of_publisher: req.body.nop,
+    ISSN_ISBN_number: req.body.in,
+    publication_year: req.body.py,
+    co_author: req.body.ca,
+    google_scholar_citation_count: req.body.gscc,
+  });
+  newReference.save();
+  res.redirect("/inputFile");
+});
+
 app.post("/conference", function (req, res) {
   let newConference = new conferences({
     IEEE_reference: req.body.fir,
@@ -190,7 +284,23 @@ app.post("/conference", function (req, res) {
     DOI_of_paper: req.body.dop,
   });
   newConference.save();
-  res.redirect("/homepage");
+  res.redirect("/inputFile");
+});
+
+app.post("/patent", function (req, res) {
+  let newPatent = new patents({
+    patent_status: req.body.ps,
+    is_principal_inventor: req.body.pi,
+    inventor_name: req.body.in,
+    other_inventors: req.body.oi,
+    patent_title: req.body.pt,
+    application_patent_number: req.body.pn,
+    application_award_date: req.body.ad,
+    patent_awarded_country: req.body.pac,
+    unique_id: req.body.uid,
+  });
+  newPatent.save();
+  res.redirect("/inputFile");
 });
 
 
@@ -224,6 +334,7 @@ function insertFile(file, res) {
 }
 
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("server is running on port 3000");
 });
+

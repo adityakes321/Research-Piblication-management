@@ -1,95 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RPMS</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <form method="post" action="/bookChapter" class="abc">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-2 col-form-label">Text</label>
-        <div class="col-10">
-          <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">DOI of the paper</label>
+        <textarea
+          name="dop"
+          id="doi-input"
+          class="form-control"
+          rows="1"
+        ></textarea>
+        <button type="button" class="btn btn-primary mt-3" id="search-doi">
+          Search DOI
+        </button>
       </div>
-      <div class="form-group row">
-        <label for="example-search-input" class="col-2 col-form-label">Search</label>
-        <div class="col-10">
-          <input class="form-control" type="search" value="How do I shoot web" id="example-search-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Full IEEE Reference</label>
+        <textarea name="fir" class="form-control" rows="1"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-email-input" class="col-2 col-form-label">Email</label>
-        <div class="col-10">
-          <input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Unique ID</label>
+        <textarea id="uid" name="ui" class="form-control" rows="1"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-url-input" class="col-2 col-form-label">URL</label>
-        <div class="col-10">
-          <input class="form-control" type="url" value="https://getbootstrap.com" id="example-url-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Title of Book</label>
+        <textarea name="top" id="title-of-paper" class="form-control" rows="2"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-        <div class="col-10">
-          <input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Name of Faculty authors</label>
+        <textarea id="name" name="nofa" class="form-control" rows="1"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-password-input" class="col-2 col-form-label">Password</label>
-        <div class="col-10">
-          <input class="form-control" type="password" value="hunter2" id="example-password-input">
-        </div>
+    
+      <div class="form-group col-12">
+        <label for="exampleSelect1">Publication Year</label>
+        <select id="py" name="py" class="form-control">
+          <option>2021</option>
+          <option>2022</option>
+        </select>
       </div>
-      <div class="form-group row">
-        <label for="example-number-input" class="col-2 col-form-label">Number</label>
-        <div class="col-10">
-          <input class="form-control" type="number" value="42" id="example-number-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">ISSN Number</label>
+        <textarea id="issn" name="in" class="form-control" rows="1"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
-        <div class="col-10">
-          <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+      <fieldset class="form-group col-12">
+        <label for="exampleTextarea"
+          >National / International</label
+        >
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              name="jt"
+              type="radio"
+              class="form-check-input"
+              name="optionsRadios"
+              value="option1"
+              checked
+            />
+            International
+          </label>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="example-date-input" class="col-2 col-form-label">Date</label>
-        <div class="col-10">
-          <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              name="jt"
+              type="radio"
+              class="form-check-input"
+              name="optionsRadios"
+              value="option2"
+            />
+            National
+          </label>
         </div>
+      </fieldset>
+      <div class="form-group col-12">
+        <label for="exampleSelect1">Month of Publication</label>
+        <select id="month" name="mop" class="form-control">
+          <option>January</option>
+          <option>February</option>
+          <option>March</option>
+          <option>April</option>
+          <option>May</option>
+          <option>June</option>
+          <option>July</option>
+          <option>August</option>
+          <option>September</option>
+          <option>October</option>
+          <option>November</option>
+          <option>December</option>
+        </select>
       </div>
-      <div class="form-group row">
-        <label for="example-month-input" class="col-2 col-form-label">Month</label>
-        <div class="col-10">
-          <input class="form-control" type="month" value="2011-08" id="example-month-input">
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Affiliating Institute at the time of publication
+        </label>
+        <textarea name="aitp" class="form-control" rows="1"></textarea>
+      </div>
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Name of the publisher
+        </label>
+        <textarea name="nop" class="form-control" rows="1"></textarea>
+      </div>
+
+
+      <div class="form-group col-12">
+        <label for="exampleTextarea">Google Scholar Citation Count</label>
+        <textarea name="gscc" class="form-control" rows="1"></textarea>
+      </div>
+      <fieldset class="form-group col-12">
+        <label for="exampleTextarea"
+          >Indexed in SCOPUS</label
+        >
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              name="is"
+              type="radio"
+              class="form-check-input"
+              name="optionsRadios"
+              value="option1"
+              checked
+            />
+            Yes
+          </label>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="example-week-input" class="col-2 col-form-label">Week</label>
-        <div class="col-10">
-          <input class="form-control" type="week" value="2011-W33" id="example-week-input">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input
+              name="is"
+              type="radio"
+              class="form-check-input"
+              name="optionsRadios"
+              value="option2"
+            />
+            No
+          </label>
         </div>
+      </fieldset>
+
+      <div class="form-group col-12">
+        <label for="exampleTextarea">H-index</label>
+        <textarea name="jhi" class="form-control" rows="1"></textarea>
       </div>
-      <div class="form-group row">
-        <label for="example-time-input" class="col-2 col-form-label">Time</label>
-        <div class="col-10">
-          <input class="form-control" type="time" value="13:45:00" id="example-time-input">
-        </div>
+      <div class="form-group col-12">
+        <label for="exampleSelect1">Co authors of this paper are</label>
+        <select name="ca" class="form-control">
+          <option>UG Students</option>
+          <option>PG Students</option>
+          <option>PhD Scholars</option>
+          <option>JIIT Faculty</option>
+          <option>Others</option>
+        </select>
       </div>
-      <div class="form-group row">
-        <label for="example-color-input" class="col-2 col-form-label">Color</label>
-        <div class="col-10">
-          <input class="form-control" type="color" value="#563d7c" id="example-color-input">
-        </div>
+      <div class="form-group col-12">
+
       </div>
-      
-</body>
+      <div class="form-group col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </form>
+
+    <script  src="./scripts/input_journal.js"></script>
+    
+  </body>
 </html>
