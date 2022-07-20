@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPMS</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="homepage.css">
     <style>body {
       margin: 0;
       color: #0e0d0b;
@@ -270,19 +269,17 @@
       <div class="citation-js" data-input="10.1080/03772063.2016.1147389" data-output-format="bibtex" data-output-template="apa">
         <a href="https://wikidata.org/wiki/Q21972834">Link</a>
       </div>
+
+      
+      <div class="page-header text-center">
+        <h2><span class="fa"></span>Click here to Logout</h2><br>
+        <a href="/logout" class="btn btn-dark btn-default btn-lg">Logout</a>
+    </div>
       <!-- 10.1080/03772063.2016.1147389 -->
       <!-- Bootstrap javascipt -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- <script src="../bundle.js"></script> -->
 
-<a href="../index.html" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
 </script>
 </body>
 </html>
