@@ -165,9 +165,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get('/homepage', isLoggedIn, function (req,res) {
-  res.render('homepage');
-})
+
 // app.get("/homepage", (req, res) => {
 //   res.sendFile(__dirname + "/views/homepage.html");
 // });
