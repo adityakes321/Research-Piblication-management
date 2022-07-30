@@ -166,9 +166,9 @@ app.use(passport.session());
 
 
 
-// app.get("/homepage", (req, res) => {
-//   res.sendFile(__dirname + "/views/homepage.html");
-// });
+app.get("/homepage", (req, res) => {
+ res.sendFile(__dirname + "/views/homepage.ejs");
+});
 
 app.get("/inputFile", (req, res) => {
   res.sendFile(__dirname + "/input_components/file_input.html");
